@@ -1,5 +1,5 @@
 import requests
-import pandas as pd
+
 def get_fakestore_data():
     url = "https://fakestoreapi.com/products"
     try:
@@ -13,10 +13,11 @@ def get_fakestore_data():
     except Exception as e:
         print("Ocorreu um erro na requisição:", e)
         return None
+
 def review_ranking(products):
     #Ordena os produtos pela contagem de avaliações em ordem decrescente
     sorted_products = sorted(products, key=lambda x: x["rating"]["count"], reverse=True)
-
+    #Exibe os produtos
     print("Todos os produtos com maior até a menor números de avaliações:")
     for i, product in enumerate(sorted_products, start=1):
         print(f"{i}.{product['title']}")
@@ -27,7 +28,6 @@ def review_ranking(products):
 def products_categories(products):
     #Conjunto vazio para armazerar as categorias
     categories = set()
-
     #Adiciona as categorias no conjunto
     for product in products:
         categories.add(product["category"])
@@ -41,7 +41,6 @@ def display_top_rated_product(products):
     #Inicializa variáveis para armazenar o produto com a melhor classificação e sua taxa
     top_rated_product = None
     max_rating = float('-inf')
-
     #Percorre a lista de produtos para encontrar o produto com a melhor classificação
     for product in products:
         if product["rating"]["rate"] > max_rating:
@@ -56,6 +55,7 @@ def display_top_rated_product(products):
     print("Classificação:", top_rated_product["rating"]["rate"])
     print("Número de avaliações:", top_rated_product["rating"]["count"])
     print("Imagem:", top_rated_product["image"])
+
 def main():
     products = get_fakestore_data()
     if products:
